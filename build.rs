@@ -2,22 +2,7 @@ extern crate bindgen;
 
 use std::env;
 use std::path::PathBuf;
-#[cfg(windows)]
-use vcpkg;
 
-#[cfg(windows)]
-fn find_leptonica_system_lib() -> Option<String> {
-    let lib = vcpkg::Config::new().find_package("leptonica").unwrap();
-
-    let include = lib
-        .include_paths
-        .iter()
-        .map(|x| x.to_string_lossy())
-        .collect::<String>();
-    Some(include)
-}
-
-#[cfg(not(windows))]
 fn find_leptonica_system_lib() -> Option<String> {
     println!("cargo:rustc-link-lib=lept");
     None
